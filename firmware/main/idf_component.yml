@@ -1,0 +1,11 @@
+dependencies:
+  idf: ">=5.3.1,<5.4"
+  espressif/onewire_bus: "1.1.2"
+  espressif/esp-zigbee-lib:
+    version: "1.6.8"
+    rules:
+      - if: "target == esp32c6"
+  espressif/esp-zboss-lib:
+    version: "1.6.4"
+    rules:
+      - if: "target == esp32c6"

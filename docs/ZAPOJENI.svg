@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1700" viewBox="0 0 1400 1700">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0L10 5L0 10" fill="none" stroke="#25686b" stroke-width="1.6"/></marker></defs>
+<style>text{font-family:Arial,sans-serif;fill:#172b3a} .wire{fill:none;stroke:#25686b;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}</style>
+<rect width="1400" height="1700" fill="#f5f7fa"/>
+<text x="50" y="48" font-size="32" font-weight="bold" style="fill:#172b3a">ESP TERMOSTAT · dvě samostatné řídicí větve</text>
+<text x="50" y="82" font-size="20" font-weight="normal" style="fill:#172b3a">Revize 1 · 29. 10. 2026 · hlavní varianta: klasická relé 5 V, kontakty NC</text>
+<rect x="50" y="104" width="1300" height="47" rx="12" fill="#fff3d9" stroke="#dfb76b" stroke-width="2"/>
+<text x="68" y="135" font-size="18" font-weight="normal" style="fill:#172b3a">Vývojový návrh. Silové dimenzování, ochrany kamen a fyzické zkoušky musí být dokončeny před provozem.</text>
+<rect x="60" y="180" width="360" height="85" rx="12" fill="#eaf4f5" stroke="#b2c6d3" stroke-width="2"/>
+<text x="78" y="210" font-size="22" font-weight="bold" style="fill:#172b3a">Zdroj A · 5 V</text>
+<text x="78" y="240" font-size="18" font-weight="normal" style="fill:#172b3a">Samostatné jištění / GND_A</text>
+<rect x="980" y="180" width="360" height="85" rx="12" fill="#eaf4f5" stroke="#b2c6d3" stroke-width="2"/>
+<text x="998" y="210" font-size="22" font-weight="bold" style="fill:#172b3a">Zdroj B · 5 V</text>
+<text x="998" y="240" font-size="18" font-weight="normal" style="fill:#172b3a">Samostatné jištění / GND_B</text>
+<polyline points="240,265 240,295" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<polyline points="1160,265 1160,295" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<rect x="60" y="295" width="360" height="215" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="78" y="325" font-size="22" font-weight="bold" style="fill:#172b3a">A · LILYGO / TTGO T-Display</text>
+<text x="78" y="355" font-size="18" font-weight="normal" style="fill:#172b3a">Původní ESP32 · LCD ST7789</text>
+<text x="78" y="381" font-size="18" font-weight="normal" style="fill:#172b3a">Lokální regulace + kalibrace A</text>
+<text x="78" y="407" font-size="18" font-weight="normal" style="fill:#172b3a">TX21 →      ← RX22</text>
+<text x="78" y="433" font-size="18" font-weight="normal" style="fill:#172b3a">Čidlo 27 · relé 25 · WDI 13</text>
+<text x="78" y="459" font-size="18" font-weight="normal" style="fill:#172b3a">LCD: 19/18/5/16/23/4</text>
+<rect x="980" y="295" width="360" height="215" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="998" y="325" font-size="22" font-weight="bold" style="fill:#172b3a">B · Seeed XIAO ESP32-C6</text>
+<text x="998" y="355" font-size="18" font-weight="normal" style="fill:#172b3a">Zigbee router · vlastní sonda</text>
+<text x="998" y="381" font-size="18" font-weight="normal" style="fill:#172b3a">Lokální regulace + kalibrace B</text>
+<text x="998" y="407" font-size="18" font-weight="normal" style="fill:#172b3a">← RX17/D7      TX16/D6 →</text>
+<text x="998" y="433" font-size="18" font-weight="normal" style="fill:#172b3a">Čidlo 0/D0 · relé 1/D1</text>
+<text x="998" y="459" font-size="18" font-weight="normal" style="fill:#172b3a">Externí watchdog WDI18/D10</text>
+<rect x="550" y="325" width="300" height="150" rx="12" fill="#eaf4f5" stroke="#4e9698" stroke-width="2"/>
+<text x="575" y="356" font-size="21" font-weight="bold" style="fill:#172b3a">ISO7721 · 3,3 V / 3,3 V</text>
+<text x="580" y="389" font-size="18" font-weight="normal" style="fill:#172b3a">A → B: TX21 → RX17</text>
+<text x="580" y="426" font-size="18" font-weight="normal" style="fill:#172b3a">B → A: RX22 ← TX16</text>
+<text x="590" y="458" font-size="18" font-weight="bold" style="fill:#172b3a">GND_A ≠ GND_B</text>
+<polyline points="420,385 550,385" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<polyline points="850,385 980,385" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<polyline points="980,425 850,425" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<polyline points="550,425 420,425" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<text x="478" y="300" font-size="18" font-weight="normal" style="fill:#172b3a">UART 115200 · CRC · obousměrné echo · timeout 5 s</text>
+<rect x="60" y="550" width="190" height="100" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="78" y="580" font-size="22" font-weight="bold" style="fill:#172b3a">DS18B20 A</text>
+<text x="78" y="610" font-size="18" font-weight="normal" style="fill:#172b3a">3V3_A / GND_A</text>
+<text x="78" y="636" font-size="18" font-weight="normal" style="fill:#172b3a">DQ → GPIO27</text>
+<rect x="270" y="550" width="230" height="100" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="288" y="580" font-size="22" font-weight="bold" style="fill:#172b3a">TTP224 · 3,3 V</text>
+<text x="288" y="610" font-size="18" font-weight="normal" style="fill:#172b3a">Q1–4 → 32/33/36/39</text>
+<text x="288" y="636" font-size="18" font-weight="normal" style="fill:#172b3a">zámek / − / + / uložit</text>
+<polyline points="150,510 150,550" class="wire" style="stroke:#25686b"/>
+<polyline points="335,510 335,530 385,530 385,550" class="wire" style="stroke:#25686b"/>
+<rect x="980" y="550" width="360" height="100" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="998" y="580" font-size="22" font-weight="bold" style="fill:#172b3a">DS18B20 B</text>
+<text x="998" y="610" font-size="18" font-weight="normal" style="fill:#172b3a">3V3_B / GND_B · DQ → GPIO0</text>
+<text x="998" y="636" font-size="18" font-weight="normal" style="fill:#172b3a">Každé DQ: pull-up 4k7 na své 3,3 V</text>
+<polyline points="1160,510 1160,550" class="wire" style="stroke:#25686b"/>
+<rect x="550" y="550" width="360" height="100" rx="12" fill="#eef0fb" stroke="#b2c6d3" stroke-width="2"/>
+<text x="568" y="580" font-size="22" font-weight="bold" style="fill:#172b3a">Home Assistant</text>
+<text x="568" y="610" font-size="18" font-weight="normal" style="fill:#172b3a">A: Wi-Fi → MQTT broker</text>
+<text x="568" y="636" font-size="18" font-weight="normal" style="fill:#172b3a">B: Zigbee → Z2M → MQTT broker</text>
+<polyline points="420,480 515,480 515,585 550,585" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<polyline points="980,480 945,480 945,620 910,620" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<text x="558" y="686" font-size="18" font-weight="normal" style="fill:#172b3a">Každá cesta přenáší obě teploty + dohled.</text>
+<text x="558" y="712" font-size="18" font-weight="normal" style="fill:#172b3a">HA vrací potvrzení zprávy; regulace je lokální.</text>
+<rect x="60" y="685" width="360" height="100" rx="12" fill="#eaf4f5" stroke="#b2c6d3" stroke-width="2"/>
+<text x="78" y="715" font-size="22" font-weight="bold" style="fill:#172b3a">Budič Q_A + cívka K_A 5 V</text>
+<text x="78" y="745" font-size="18" font-weight="normal" style="fill:#172b3a">GPIO25 · aktivní HIGH</text>
+<text x="78" y="771" font-size="18" font-weight="normal" style="fill:#172b3a">LOW / ztráta 5 V → NC sepne</text>
+<rect x="980" y="685" width="360" height="100" rx="12" fill="#eaf4f5" stroke="#b2c6d3" stroke-width="2"/>
+<text x="998" y="715" font-size="22" font-weight="bold" style="fill:#172b3a">Budič Q_B + cívka K_B 5 V</text>
+<text x="998" y="745" font-size="18" font-weight="normal" style="fill:#172b3a">GPIO1 · aktivní HIGH</text>
+<text x="998" y="771" font-size="18" font-weight="normal" style="fill:#172b3a">LOW / ztráta 5 V → NC sepne</text>
+<polyline points="60,480 36,480 36,725 60,725" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<polyline points="1340,480 1364,480 1364,725 1340,725" class="wire" style="stroke:#25686b" marker-end="url(#arrow)"/>
+<text x="60" y="825" font-size="20" font-weight="bold" style="fill:#172b3a">Zdroje 5 V ani jejich země neparalelně. Kontakty relé patří do stejného jištěného silového okruhu.</text>
+<rect x="50" y="865" width="1300" height="350" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="75" y="904" font-size="24" font-weight="bold" style="fill:#172b3a">Silový princip · obě relé samostatně dimenzovat na celou zátěž čerpadla</text>
+<text x="80" y="945" font-size="19" font-weight="bold" style="fill:#172b3a">L z UPS</text>
+<rect x="190" y="927" width="110" height="30" rx="12" fill="#fff3d9" stroke="#b2c6d3" stroke-width="2"/>
+<text x="201" y="948" font-size="17" font-weight="normal" style="fill:#172b3a">JIŠTĚNÍ</text>
+<polyline points="80,962 190,962 190,942" class="wire" style="stroke:#25686b"/>
+<polyline points="300,942 355,942 355,1125" class="wire" style="stroke:#25686b"/>
+<polyline points="355,955 550,955" class="wire" style="stroke:#25686b"/>
+<circle cx="355" cy="955" r="4" fill="#25686b"/>
+<circle cx="550" cy="955" r="4" fill="#25686b"/>
+<circle cx="650" cy="955" r="4" fill="#25686b"/>
+<polyline points="550,955 650,955" class="wire" style="stroke:#25686b"/>
+<polyline points="650,955 1000,955" class="wire" style="stroke:#25686b"/>
+<circle cx="1000" cy="955" r="4" fill="#25686b"/>
+<text x="670" y="943" font-size="18" font-weight="normal" style="fill:#172b3a">K_A · COM–NC</text>
+<polyline points="355,1005 550,1005" class="wire" style="stroke:#25686b"/>
+<circle cx="355" cy="1005" r="4" fill="#25686b"/>
+<circle cx="550" cy="1005" r="4" fill="#25686b"/>
+<circle cx="650" cy="1005" r="4" fill="#25686b"/>
+<polyline points="550,1005 650,1005" class="wire" style="stroke:#25686b"/>
+<polyline points="650,1005 1000,1005" class="wire" style="stroke:#25686b"/>
+<circle cx="1000" cy="1005" r="4" fill="#25686b"/>
+<text x="670" y="993" font-size="18" font-weight="normal" style="fill:#172b3a">K_B · COM–NC</text>
+<polyline points="355,1065 550,1065" class="wire" style="stroke:#25686b"/>
+<circle cx="355" cy="1065" r="4" fill="#25686b"/>
+<circle cx="550" cy="1065" r="4" fill="#25686b"/>
+<circle cx="650" cy="1065" r="4" fill="#25686b"/>
+<polyline points="550,1065 650,1045" class="wire" style="stroke:#25686b"/>
+<polyline points="650,1065 1000,1065" class="wire" style="stroke:#25686b"/>
+<circle cx="1000" cy="1065" r="4" fill="#25686b"/>
+<text x="670" y="1053" font-size="18" font-weight="normal" style="fill:#172b3a">T_HAV · sepne při vysoké teplotě</text>
+<polyline points="355,1125 550,1125" class="wire" style="stroke:#25686b"/>
+<circle cx="355" cy="1125" r="4" fill="#25686b"/>
+<circle cx="550" cy="1125" r="4" fill="#25686b"/>
+<circle cx="650" cy="1125" r="4" fill="#25686b"/>
+<polyline points="550,1125 650,1105" class="wire" style="stroke:#25686b"/>
+<polyline points="650,1125 1000,1125" class="wire" style="stroke:#25686b"/>
+<circle cx="1000" cy="1125" r="4" fill="#25686b"/>
+<text x="670" y="1113" font-size="18" font-weight="normal" style="fill:#172b3a">S_ON · ruční trvalý oběh</text>
+<polyline points="1000,955 1000,1125" class="wire" style="stroke:#25686b"/>
+<polyline points="1000,1005 1090,1005" class="wire" style="stroke:#25686b"/>
+<rect x="1090" y="963" width="205" height="125" rx="12" fill="#eaf4f5" stroke="#b2c6d3" stroke-width="2"/>
+<text x="1110" y="999" font-size="24" font-weight="bold" style="fill:#172b3a">ČERPADLO</text>
+<text x="1110" y="1028" font-size="19" font-weight="normal" style="fill:#172b3a">L  /  N  /  PE</text>
+<text x="80" y="1160" font-size="18" font-weight="normal" style="fill:#172b3a">N téhož okruhu</text>
+<polyline points="260,1155 1190,1155 1190,1088" class="wire" style="stroke:#3b73a5"/>
+<text x="80" y="1192" font-size="18" font-weight="normal" style="fill:#172b3a">PE nepřerušovaný</text>
+<polyline points="280,1187 1230,1187 1230,1088" class="wire" style="stroke:#59823c"/>
+<rect x="50" y="1240" width="635" height="360" rx="12" fill="#ffffff" stroke="#b2c6d3" stroke-width="2"/>
+<text x="75" y="1278" font-size="23" font-weight="bold" style="fill:#172b3a">Budič jedné cívky 5 V · zopakovat 2×</text>
+<text x="470" y="1315" font-size="19" font-weight="bold" style="fill:#172b3a">+5 V_i</text>
+<polyline points="490,1322 490,1345" class="wire" style="stroke:#25686b"/>
+<rect x="470" y="1345" width="40" height="70" rx="0" fill="#eaf4f5" stroke="#25686b" stroke-width="2"/>
+<text x="525" y="1383" font-size="18" font-weight="normal" style="fill:#172b3a">cívka K_i</text>
+<polyline points="490,1415 490,1443" class="wire" style="stroke:#25686b"/>
+<circle cx="490" cy="1432" r="4" fill="#25686b"/>
+<polyline points="490,1335 620,1335 620,1360" class="wire" style="stroke:#25686b"/>
+<polyline points="610,1360 630,1360" class="wire" style="stroke:#25686b"/>
+<path d="M620 1360 L610 1386 L630 1386 Z" fill="none" stroke="#25686b" stroke-width="2.5"/>
+<polyline points="620,1386 620,1432 490,1432" class="wire" style="stroke:#25686b"/>
+<text x="534" y="1455" font-size="16" font-weight="normal" style="fill:#172b3a">D: K nahoře</text>
+<text x="530" y="1477" font-size="16" font-weight="normal" style="fill:#172b3a">A dole</text>
+<text x="75" y="1375" font-size="18" font-weight="normal" style="fill:#172b3a">GPIO RELAY1</text>
+<text x="75" y="1397" font-size="17" font-weight="normal" style="fill:#172b3a">A25 / B1 / C3:4</text>
+<polyline points="80,1420 230,1420" class="wire" style="stroke:#25686b"/>
+<rect x="230" y="1408" width="65" height="24" rx="0" fill="#ffffff" stroke="#25686b" stroke-width="2"/>
+<text x="237" y="1400" font-size="17" font-weight="normal" style="fill:#172b3a">100 Ω</text>
+<polyline points="295,1420 380,1420 380,1465 425,1465" class="wire" style="stroke:#25686b"/>
+<polyline points="425,1437 425,1493" class="wire" style="stroke:#25686b"/>
+<polyline points="450,1443 450,1454" class="wire" style="stroke:#25686b"/>
+<polyline points="450,1460 450,1470" class="wire" style="stroke:#25686b"/>
+<polyline points="450,1476 450,1487" class="wire" style="stroke:#25686b"/>
+<polyline points="490,1443 450,1443" class="wire" style="stroke:#25686b"/>
+<polyline points="450,1487 490,1487 490,1515" class="wire" style="stroke:#25686b"/>
+<text x="335" y="1375" font-size="18" font-weight="normal" style="fill:#172b3a">Q: MOSFET</text>
+<text x="335" y="1395" font-size="16" font-weight="normal" style="fill:#172b3a">logic 3,3 V</text>
+<circle cx="345" cy="1420" r="4" fill="#25686b"/>
+<polyline points="345,1420 345,1453" class="wire" style="stroke:#25686b"/>
+<rect x="333" y="1453" width="24" height="40" rx="0" fill="#ffffff" stroke="#25686b" stroke-width="2"/>
+<text x="285" y="1478" font-size="17" font-weight="normal" style="fill:#172b3a">10k</text>
+<polyline points="345,1493 345,1515 490,1515" class="wire" style="stroke:#25686b"/>
+<polyline points="470,1515 510,1515" class="wire" style="stroke:#25686b"/>
+<polyline points="478,1523 502,1523" class="wire" style="stroke:#25686b"/>
+<polyline points="486,1531 494,1531" class="wire" style="stroke:#25686b"/>
+<text x="465" y="1554" font-size="18" font-weight="normal" style="fill:#172b3a">GND_i</text>
+<text x="75" y="1577" font-size="17" font-weight="normal" style="fill:#172b3a">Pro watchdog: před gate vložit CMD AND WD_OK.</text>
+<rect x="710" y="1240" width="640" height="360" rx="12" fill="#fff8ed" stroke="#dfb76b" stroke-width="2"/>
+<text x="735" y="1278" font-size="23" font-weight="bold" style="fill:#172b3a">Bistabilní alternativa · ne hlavní varianta</text>
+<text x="735" y="1319" font-size="20" font-weight="normal" style="fill:#172b3a">PE014F12: 12 V cívka mezi OUT1 a OUT2.</text>
+<text x="735" y="1353" font-size="19" font-weight="normal" style="fill:#172b3a">Pro 12 V použít vhodný můstek, např. DRV8871.</text>
+<text x="735" y="1387" font-size="19" font-weight="bold" style="fill:#a84220">DRV8833 ze světýlek: max. 10,8 V → ne na 12 V.</text>
+<text x="735" y="1421" font-size="19" font-weight="normal" style="fill:#172b3a">RELAY1 / RELAY2 → IN1 / IN2; opačné polarity.</text>
+<text x="735" y="1455" font-size="19" font-weight="normal" style="fill:#172b3a">Pulz 50 ms; přestávka ≥2,1 s; externí limit buzení.</text>
+<text x="735" y="1489" font-size="19" font-weight="bold" style="fill:#172b3a">Výpadek napájení může ponechat kontakt OFF.</text>
+<text x="735" y="1523" font-size="19" font-weight="normal" style="fill:#172b3a">Nezávislý havarijní termostat je stále nutný.</text>
+<text x="735" y="1563" font-size="18" font-weight="normal" style="fill:#172b3a">Plné podmínky, tabulka GPIO a postup: ZAPOJENI.md</text>
+<text x="55" y="1637" font-size="19" font-weight="bold" style="fill:#172b3a">Síť 230 V oddělit od SELV. Žádná část výkresu nepotvrzuje skutečný průtok ani bezpečný odvod tepla.</text>
+<text x="55" y="1668" font-size="18" font-weight="normal" style="fill:#172b3a">Konečný projekt vyžaduje typ čerpadla, přesné relé, návrh ochran a přejímku. Firmware 0.1.0: pouze zkušební provoz.</text>
+</svg>

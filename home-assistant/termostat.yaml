@@ -1,0 +1,171 @@
+# Home Assistant package. Set the C6 Zigbee2MQTT friendly_name to kamna_b.
+# Include with: homeassistant: packages: !include_dir_named packages
+# No HA automation participates in local pump control.
+mqtt:
+  sensor:
+    - name: Kamna A teplota WiFi
+      unique_id: kamna_a_temperature_wifi
+      default_entity_id: sensor.kamna_a_teplota_wifi
+      state_topic: kamna/termostat/A/state
+      value_template: "{{ value_json.local.temperature }}"
+      availability_topic: kamna/termostat/A/state
+      availability_template: "{{ 'online' if value_json.local.temperature is not none else 'offline' }}"
+      device_class: temperature
+      state_class: measurement
+      unit_of_measurement: °C
+      expire_after: 20
+    - name: Kamna B teplota pres WiFi
+      unique_id: kamna_b_temperature_wifi
+      default_entity_id: sensor.kamna_b_teplota_wifi
+      state_topic: kamna/termostat/A/state
+      value_template: "{{ value_json.peer.temperature }}"
+      availability_topic: kamna/termostat/A/state
+      availability_template: "{{ 'online' if value_json.peer.available and value_json.peer.temperature is not none else 'offline' }}"
+      device_class: temperature
+      state_class: measurement
+      unit_of_measurement: °C
+      expire_after: 20
+    - name: Kamna B teplota Zigbee
+      unique_id: kamna_b_temperature_zigbee
+      default_entity_id: sensor.kamna_b_teplota_zigbee
+      state_topic: zigbee2mqtt/kamna_b
+      value_template: "{{ value_json.local.temperature }}"
+      availability_topic: zigbee2mqtt/kamna_b
+      availability_template: "{{ 'online' if value_json.local is defined and value_json.local.temperature is not none else 'offline' }}"
+      device_class: temperature
+      state_class: measurement
+      unit_of_measurement: °C
+      expire_after: 20
+    - name: Kamna A teplota pres Zigbee
+      unique_id: kamna_a_temperature_zigbee
+      default_entity_id: sensor.kamna_a_teplota_zigbee
+      state_topic: zigbee2mqtt/kamna_b
+      value_template: "{{ value_json.peer.temperature }}"
+      availability_topic: zigbee2mqtt/kamna_b
+      availability_template: "{{ 'online' if value_json.peer is defined and value_json.peer.available and value_json.peer.temperature is not none else 'offline' }}"
+      device_class: temperature
+      state_class: measurement
+      unit_of_measurement: °C
+      expire_after: 20
+    - name: Kamna A diagnostika
+      unique_id: kamna_a_diagnostics
+      default_entity_id: sensor.kamna_a_diagnostika
+      state_topic: kamna/termostat/A/state
+      value_template: "{{ value_json.local.faults }}"
+      json_attributes_topic: kamna/termostat/A/state
+      expire_after: 20
+    - name: Kamna B diagnostika
+      unique_id: kamna_b_diagnostics
+      default_entity_id: sensor.kamna_b_diagnostika
+      state_topic: zigbee2mqtt/kamna_b
+      value_template: "{{ value_json.local.faults if value_json.local is defined else 'None' }}"
+      json_attributes_topic: zigbee2mqtt/kamna_b
+      expire_after: 20
+  binary_sensor:
+    - name: Kamna WiFi cesta
+      unique_id: kamna_wifi_route
+      default_entity_id: binary_sensor.kamna_wifi_cesta
+      state_topic: kamna/termostat/A/state
+      value_template: "{{ 'ON' if value_json.sequence is defined else 'OFF' }}"
+      off_delay: 20
+      device_class: connectivity
+    - name: Kamna Zigbee cesta
+      unique_id: kamna_zigbee_route
+      default_entity_id: binary_sensor.kamna_zigbee_cesta
+      state_topic: zigbee2mqtt/kamna_b
+      value_template: "{{ 'ON' if value_json.sequence is defined else 'OFF' }}"
+      off_delay: 20
+      device_class: connectivity
+    - name: Kamna B dohled z A
+      unique_id: kamna_b_peer_alarm
+      default_entity_id: binary_sensor.kamna_b_dohled_z_a
+      state_topic: kamna/termostat/A/peer_alarm
+      device_class: problem
+      expire_after: 20
+    - name: Kamna A dohled z B
+      unique_id: kamna_a_peer_alarm
+      default_entity_id: binary_sensor.kamna_a_dohled_z_b
+      state_topic: zigbee2mqtt/kamna_b
+      value_template: "{{ 'ON' if value_json.peer_alarm | default(true) else 'OFF' }}"
+      device_class: problem
+      expire_after: 20
+    - name: Kamna Zigbee nedorucuje podle A
+      unique_id: kamna_zigbee_delivery_alarm
+      default_entity_id: binary_sensor.kamna_zigbee_nedorucuje
+      state_topic: kamna/termostat/A/state
+      value_template: "{{ 'OFF' if value_json.peer.available and value_json.peer.ha_delivery else 'ON' }}"
+      device_class: problem
+      expire_after: 20
+    - name: Kamna WiFi nedorucuje podle B
+      unique_id: kamna_wifi_delivery_alarm
+      default_entity_id: binary_sensor.kamna_wifi_nedorucuje
+      state_topic: zigbee2mqtt/kamna_b
+      value_template: "{{ 'OFF' if value_json.peer is defined and value_json.peer.available and value_json.peer.ha_delivery else 'ON' }}"
+      device_class: problem
+      expire_after: 20
+    - name: Kamna nastaveni nesynchronizovano
+      unique_id: kamna_sync_alarm
+      default_entity_id: binary_sensor.kamna_nastaveni_nesynchronizovano
+      state_topic: kamna/termostat/A/state
+      value_template: "{{ 'OFF' if value_json.sync_ok else 'ON' }}"
+      device_class: problem
+      expire_after: 20
+
+automation:
+  - id: kamna_ack_wifi
+    alias: Kamna potvrzeni doruceni WiFi
+    mode: queued
+    max: 5
+    triggers:
+      - trigger: mqtt
+        topic: kamna/termostat/A/state
+    conditions:
+      - condition: template
+        value_template: "{{ trigger.payload_json.sequence is defined }}"
+    actions:
+      - action: mqtt.publish
+        data:
+          topic: kamna/termostat/A/ack
+          payload: "{{ trigger.payload_json.sequence }}"
+          qos: 1
+          retain: false
+  - id: kamna_ack_zigbee
+    alias: Kamna potvrzeni doruceni Zigbee
+    mode: queued
+    max: 5
+    triggers:
+      - trigger: mqtt
+        topic: zigbee2mqtt/kamna_b
+    conditions:
+      - condition: template
+        value_template: "{{ trigger.payload_json.sequence is defined }}"
+    actions:
+      - action: mqtt.publish
+        data:
+          topic: zigbee2mqtt/kamna_b/set
+          payload: "{{ {'delivery_ack': trigger.payload_json.sequence | int} | to_json }}"
+          qos: 1
+          retain: false
+  - id: kamna_log_dohled
+    alias: Kamna zaznam diagnostiky a vypadku
+    mode: queued
+    triggers:
+      - trigger: state
+        entity_id:
+          - binary_sensor.kamna_wifi_cesta
+          - binary_sensor.kamna_zigbee_cesta
+          - binary_sensor.kamna_b_dohled_z_a
+          - binary_sensor.kamna_a_dohled_z_b
+          - binary_sensor.kamna_zigbee_nedorucuje
+          - binary_sensor.kamna_wifi_nedorucuje
+          - sensor.kamna_a_diagnostika
+          - sensor.kamna_b_diagnostika
+    conditions:
+      - condition: template
+        value_template: "{{ trigger.to_state is not none and (trigger.from_state is none or trigger.from_state.state != trigger.to_state.state) }}"
+    actions:
+      - action: logbook.log
+        data:
+          name: Termostat kamen
+          message: "{{ trigger.to_state.name }}: {{ trigger.to_state.state }}"
+          entity_id: "{{ trigger.entity_id }}"
